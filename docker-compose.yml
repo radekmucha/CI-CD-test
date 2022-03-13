@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+    haproxy:
+        image: haproxy:2.5.4
+        container_name: haproxy
+        restart: always
+        depends_on:
+          - app1
+          - app2
+        ports:
+          - "80:80"
+          - "443:443"
+        volumes:
+          - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+          - ./haproxy/localhost.pem:/etc/ssl/certs/localhost.pem
+        networks:
+          - proxy-net
+
+
+    app1:
+        image: app1
+        container_name: app1
+        restart: always  
+        networks:
+          - proxy-net        
+ 
+
+    app2:
+        image: app2
+        container_name: app2
+        restart: always  
+        networks:
+          - proxy-net        
+    
+networks:
+    proxy-net:
+      external: false
+      name: proxy-net
+
