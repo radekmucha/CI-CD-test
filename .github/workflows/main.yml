@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build docker images - App1
+        working-directory: ./app1
+        run: |
+          docker build -t radekmucha/ci-cd:app1 .
+          docker push radekmucha/ci-cd:app1
+      - name: Build docker images - App2
+        working-directory: ./app2
+        run: |
+          docker build -t radekmucha/ci-cd:app1 .
+          docker push radekmucha/ci-cd:app1
+ 
