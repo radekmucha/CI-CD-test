@@ -19,6 +19,7 @@ jobs:
         working-directory: ./app1
         run: |
           docker build -t radekmucha/ci-cd:app1 .
+          docker images
           docker push radekmucha/ci-cd:app1
       - name: Build docker images - App2
         working-directory: ./app2
